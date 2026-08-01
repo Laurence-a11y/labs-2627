@@ -28,16 +28,26 @@ session_start();
         <form action="step-2.php" method="POST">
 
         <fieldset>
-          <label>Complete Name</label>
-          <input type="text" name="fullname" placeholder="John Doe">
+         <label>Complete Name</label>
+        <input type="text" name="fullname" placeholder="John Doe">
 
-          <label>Email address</label>
-          <input type="email" name="email" placeholder="example@canonical.com" autocomplete="email">
+        <label>Birthday</label>
+        <input type="date" name="birthdate">
 
-          <label>Password</label>
-          <input type="password" name="password" placeholder="******" autocomplete="current-password">
+        <label>Contact Number</label>
+        <input type="text" name="contact_number" placeholder="+639123456789">
 
-          <button type="submit">Next</button>
+        <label>Sex</label>
+        <br>
+
+        <input type="radio" name="sex" value="male" checked> Male
+        <br>
+
+        <input type="radio" name="sex" value="female"> Female
+
+        <br><br>
+
+        <button type="submit">Next</button>
         </fieldset>
 
         </form>

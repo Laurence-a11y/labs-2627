@@ -4,22 +4,23 @@ require "helpers/helper-functions.php";
 
 session_start();
 
-$birthdate = $_POST['birthdate'];
-$sex = $_POST['sex'];
+// Get data from Step 2
+$program = $_POST['program'];
 $address = $_POST['address'];
 
-$_SESSION['birthdate'] = $birthdate;
-$_SESSION['sex'] = $sex;
+// Save to Session
+$_SESSION['program'] = $program;
 $_SESSION['address'] = $address;
 
 dump_session();
+
 ?>
 <html>
 <head>
     <meta charset="utf-8">
     <title>IPT10 Laboratory Activity #2</title>
     <link rel="icon" href="https://phpsandbox.io/assets/img/brand/phpsandbox.png">
-    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla-framework-version-4.15.0.min.css" />   
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla-framework-version-4.15.0.min.css" />
 </head>
 <body>
 
@@ -31,38 +32,31 @@ dump_session();
           Registration (Step 3/3)
         </h1>
       </div>
-      <div class="p-section--shallow">
 
+      <div class="p-section--shallow">
 
         <form action="thank-you.php" method="POST">
 
           <fieldset>
-            <label>Contact Number</label>
-            <input type="text" name="contact_number" placeholder="+639123456789" />
 
-            <label>Program</label>
-            <select name="program">
-              <option disabled="disabled" selected="">Select an option</option>
-              <option value="cs">Computer Science</option>
-              <option value="it">Information Technology</option>
-              <option value="is">Information Systems</option>
-              <option value="se">Software Engineering</option>
-              <option value="ds">Data Science</option>
-            </select>
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="example@canonical.com" autocomplete="email">
+
+            <label>Password</label>
+            <input type="password" name="password" placeholder="******" autocomplete="current-password">
 
             <label class="p-checkbox--inline">
-            <input type="checkbox" name="agree">
+              <input type="checkbox" name="agree">
             </label>
             I agree to the terms and conditions...
-            
-            <br />
-            <br />
+
+            <br><br>
 
             <button type="submit" class="p-button--positive">Finish</button>
+
           </fieldset>
 
         </form>
-
 
       </div>
 
