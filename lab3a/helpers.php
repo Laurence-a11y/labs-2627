@@ -1,26 +1,24 @@
 <?php
 
-define('MAX_QUESTION_NUMBER', 50);
+define('MAX_QUESTION_NUMBER', 5);
 
 function retrieve_questions() {
     // 1. Open the questions/triviaquiz.json file
-    $json_string = file_get_contents("./questions/triviaquiz.json");
-    
-    // 2. Convert it the array
+    $json_string = file_get_contents(__DIR__ . "/questions/triviaquiz.json");
+
+    // 2. Convert it to an array
     $json_data = json_decode($json_string, true);
-    
+
     // 3. Return the trivia questions array data
     return $json_data;
 }
 
-function get_current_question($answers = '') {
-    $number_of_answers = strlen($answers);
+/**
+ * Returns ALL questions (used now that the quiz shows everything at once).
+ */
+function get_all_questions() {
     $questions = retrieve_questions();
-    return $questions['questions'][$number_of_answers];
-}
-
-function get_current_question_number($answers = '') {
-    return strlen($answers) + 1;
+    return $questions['questions'];
 }
 
 function get_options_for_question_number($number = 0) {
@@ -28,14 +26,19 @@ function get_options_for_question_number($number = 0) {
     return $questions['questions'][$number - 1]['options'];
 }
 
-function compute_score($answers = []) {
+/**
+ * $answers is expected to be a string where each character (in order)
+ * is the selected option key (A/B/C/D) for that question number.
+ * e.g. "DBABC"
+ */
+function compute_score($answers = '') {
     $questions = retrieve_questions();
     $correct_answers = $questions['answers'];
 
     $score = 0;
     for ($i = 0; $i < MAX_QUESTION_NUMBER; $i++) {
-        if ($correct_answers[$i] == $answers[$i]) {
-            $score += 100;
+        if (isset($answers[$i]) && $correct_answers[$i] == $answers[$i]) {
+            $score += 1; // 1 point per correct answer (5 max) — bug fix: was adding 100
         }
     }
     return $score;
@@ -44,4 +47,21 @@ function compute_score($answers = []) {
 function get_answers() {
     $questions = retrieve_questions();
     return $questions['answers'];
+}
+
+/**
+ * Given an option key (A/B/C/D) and the question number, return the
+ * human-readable text of that option. Used on the results page.
+ */
+function get_option_text($question_number, $key) {
+    if (empty($key)) {
+        return '(no answer)';
+    }
+    $options = get_options_for_question_number($question_number);
+    foreach ($options as $option) {
+        if ($option['key'] === $key) {
+            return $option['value'];
+        }
+    }
+    return '(no answer)';
 }
