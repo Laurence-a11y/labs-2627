@@ -1,7 +1,7 @@
 <?php
 // ========================================
-// PDF, AUDIO, AND IMAGE FILE UPLOAD HANDLER - combined from pdf-file-upload, audio-file-upload, and image-file-upload branches
-// This file processes and displays .pdf, .mp3, and image files
+// PDF, AUDIO, IMAGE, AND VIDEO FILE UPLOAD HANDLER - combined from pdf-file-upload, audio-file-upload, image-file-upload, and video-file-upload branches
+// This file processes and displays .pdf, .mp3, image, and .mp4 files
 // ========================================
 
 $upload_directory = getcwd() . '/uploads/';
@@ -66,6 +66,27 @@ if (!empty($_FILES['image_file']['name'])) {
     }
 }
 
+// Handle Video File
+if (!empty($_FILES['video_file']['name'])) {
+    $uploaded_video_file = $upload_directory . basename($_FILES['video_file']['name']);
+    $temporary_video_file = $_FILES['video_file']['tmp_name'];
+
+    if (move_uploaded_file($temporary_video_file, $uploaded_video_file)) {
+        $video_relative = $relative_path . basename($_FILES['video_file']['name']);
+        ?>
+        <div class="result-card">
+            <h3>Video File</h3>
+            <video width="100%" controls>
+                <source src="<?php echo $video_relative; ?>" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <?php
+    } else {
+        echo '<p class="error">Failed to upload video file</p>';
+    }
+}
+
 $results = ob_get_clean();
 ?>
 <html>
@@ -105,7 +126,7 @@ $results = ob_get_clean();
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        embed, img { border-radius: 6px; border: 2px solid #ff1e3c; max-width: 100%; }
+        embed, img, video { border-radius: 6px; border: 2px solid #ff1e3c; max-width: 100%; }
         audio { width: 100%; margin-top: 5px; }
         .error { color: #ff1e3c; font-weight: bold; margin-bottom: 15px; }
         a.back-link {

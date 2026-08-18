@@ -1,6 +1,6 @@
 <!-- ======================================== -->
-<!-- PDF, AUDIO, AND IMAGE FILE UPLOAD - combined from pdf-file-upload, audio-file-upload, and image-file-upload branches -->
-<!-- This version accepts .pdf, .mp3, and image files -->
+<!-- PDF, AUDIO, IMAGE, AND VIDEO FILE UPLOAD - combined from pdf-file-upload, audio-file-upload, image-file-upload, and video-file-upload branches -->
+<!-- This version accepts .pdf, .mp3, image, and .mp4 files -->
 <!-- ======================================== -->
 <html>
 <head>
@@ -105,6 +105,12 @@
         <div class="card">
             <h3>Image File</h3>
             <input type="file" name="image_file" accept="image/*" />
+        </div>
+
+        <!-- This input only accepts MP4 video files -->
+        <div class="card">
+            <h3>Video File</h3>
+            <input type="file" name="video_file" accept=".mp4" />
         </div>
 
         <button type="submit">Upload</button>
