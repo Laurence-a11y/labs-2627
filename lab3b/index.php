@@ -1,6 +1,6 @@
 <!-- ======================================== -->
-<!-- PDF FILE UPLOAD ONLY - pdf-file-upload branch -->
-<!-- This version only accepts .pdf files -->
+<!-- PDF AND AUDIO FILE UPLOAD - combined from pdf-file-upload and audio-file-upload branches -->
+<!-- This version accepts .pdf and .mp3 files -->
 <!-- ======================================== -->
 <html>
 <head>
@@ -84,7 +84,7 @@
 
     <div class="header-wrap">
         <img src="https://www.auf.edu.ph/home/images/logo2.png" alt="Angeles University Foundation">
-        <h4>PDF File Upload</h4>
+        <h4>File Upload</h4>
     </div>
 
     <form method="post" action="uploaded.php" enctype="multipart/form-data">
@@ -93,6 +93,12 @@
         <div class="card">
             <h3>PDF File</h3>
             <input type="file" name="pdf_file" accept=".pdf" />
+        </div>
+
+        <!-- This input only accepts MP3 audio files -->
+        <div class="card">
+            <h3>Audio File</h3>
+            <input type="file" name="audio_file" accept=".mp3" />
         </div>
 
         <button type="submit">Upload</button>
