@@ -1,6 +1,6 @@
 <!-- ======================================== -->
-<!-- PDF AND AUDIO FILE UPLOAD - combined from pdf-file-upload and audio-file-upload branches -->
-<!-- This version accepts .pdf and .mp3 files -->
+<!-- PDF, AUDIO, AND IMAGE FILE UPLOAD - combined from pdf-file-upload, audio-file-upload, and image-file-upload branches -->
+<!-- This version accepts .pdf, .mp3, and image files -->
 <!-- ======================================== -->
 <html>
 <head>
@@ -99,6 +99,12 @@
         <div class="card">
             <h3>Audio File</h3>
             <input type="file" name="audio_file" accept=".mp3" />
+        </div>
+
+        <!-- This input only accepts image files -->
+        <div class="card">
+            <h3>Image File</h3>
+            <input type="file" name="image_file" accept="image/*" />
         </div>
 
         <button type="submit">Upload</button>

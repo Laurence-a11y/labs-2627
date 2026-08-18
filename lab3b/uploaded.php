@@ -1,7 +1,7 @@
 <?php
 // ========================================
-// PDF AND AUDIO FILE UPLOAD HANDLER - combined from pdf-file-upload and audio-file-upload branches
-// This file processes and displays .pdf and .mp3 files
+// PDF, AUDIO, AND IMAGE FILE UPLOAD HANDLER - combined from pdf-file-upload, audio-file-upload, and image-file-upload branches
+// This file processes and displays .pdf, .mp3, and image files
 // ========================================
 
 $upload_directory = getcwd() . '/uploads/';
@@ -48,6 +48,24 @@ if (!empty($_FILES['audio_file']['name'])) {
     }
 }
 
+// Handle Image File
+if (!empty($_FILES['image_file']['name'])) {
+    $uploaded_image_file = $upload_directory . basename($_FILES['image_file']['name']);
+    $temporary_image_file = $_FILES['image_file']['tmp_name'];
+
+    if (move_uploaded_file($temporary_image_file, $uploaded_image_file)) {
+        $image_relative = $relative_path . basename($_FILES['image_file']['name']);
+        ?>
+        <div class="result-card">
+            <h3>Image File</h3>
+            <img src="<?php echo $image_relative; ?>" alt="Uploaded image">
+        </div>
+        <?php
+    } else {
+        echo '<p class="error">Failed to upload image file</p>';
+    }
+}
+
 $results = ob_get_clean();
 ?>
 <html>
@@ -87,7 +105,7 @@ $results = ob_get_clean();
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        embed { border-radius: 6px; border: 2px solid #ff1e3c; max-width: 100%; }
+        embed, img { border-radius: 6px; border: 2px solid #ff1e3c; max-width: 100%; }
         audio { width: 100%; margin-top: 5px; }
         .error { color: #ff1e3c; font-weight: bold; margin-bottom: 15px; }
         a.back-link {
