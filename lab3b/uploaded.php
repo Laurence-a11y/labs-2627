@@ -1,22 +1,104 @@
 <?php
+// ========================================
+// PDF FILE UPLOAD HANDLER ONLY - pdf-file-upload branch
+// This file only processes and displays .pdf files
+// ========================================
 
 $upload_directory = getcwd() . '/uploads/';
 $relative_path = '/uploads/';
 
-// Handle Text File
-$uploaded_text_file = $upload_directory . basename($_FILES['text_file']['name']);
-$temporary_file = $_FILES['text_file']['tmp_name'];
+ob_start();
 
-if (move_uploaded_file($temporary_file, $uploaded_text_file)) {
-    $text_file_content = file_get_contents($uploaded_text_file, 'r');
-    ?>
-    <textarea cols="70" rows="30"><?php echo $text_file_content; ?></textarea>
-    <?php
+// Handle PDF File
+if (!empty($_FILES['pdf_file']['name'])) {
+    $uploaded_pdf_file = $upload_directory . basename($_FILES['pdf_file']['name']);
+    $temporary_pdf_file = $_FILES['pdf_file']['tmp_name'];
+
+    if (move_uploaded_file($temporary_pdf_file, $uploaded_pdf_file)) {
+        $pdf_relative = $relative_path . basename($_FILES['pdf_file']['name']);
+        ?>
+        <div class="result-card">
+            <h3>PDF File</h3>
+            <embed src="<?php echo $pdf_relative; ?>" width="100%" height="500" type="application/pdf">
+        </div>
+        <?php
+    } else {
+        echo '<p class="error">Failed to upload PDF file</p>';
+    }
 } else {
-    echo 'Failed to upload file';
+    echo '<p class="error">No PDF file was uploaded</p>';
 }
 
-
-echo '<pre>';
-var_dump($_FILES);
-exit;
+$results = ob_get_clean();
+?>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Uploaded PDF File</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #0d0d0d;
+            color: #e6e6e6;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h4 {
+            display: inline-block;
+            color: #fff;
+            border-bottom: 2px solid #ff1e3c;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .result-card {
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-left: 4px solid #ff1e3c;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .result-card h3 {
+            color: #ff1e3c;
+            margin-bottom: 12px;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        embed { border-radius: 6px; border: 2px solid #ff1e3c; max-width: 100%; }
+        .error { color: #ff1e3c; font-weight: bold; margin-bottom: 15px; }
+        a.back-link {
+            color: #ff1e3c;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            border: 1px solid #ff1e3c;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: background .2s, color .2s;
+        }
+        a.back-link:hover { background: #ff1e3c; color: #fff; }
+        pre {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            padding: 15px;
+            overflow: auto;
+            color: #999;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h4>Uploaded PDF File</h4>
+    <?php echo $results; ?>
+    <a class="back-link" href="index.php">&larr; Upload Another PDF</a>
+    <pre><?php var_dump($_FILES); ?></pre>
+</div>
+</body>
+</html>
