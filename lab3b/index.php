@@ -1,6 +1,6 @@
 <!-- ======================================== -->
-<!-- VIDEO FILE UPLOAD ONLY - video-file-upload branch -->
-<!-- This version only accepts .mp4 video files -->
+<!-- PDF, AUDIO, IMAGE, AND VIDEO FILE UPLOAD - combined from pdf-file-upload, audio-file-upload, image-file-upload, and video-file-upload branches -->
+<!-- This version accepts .pdf, .mp3, image, and .mp4 files -->
 <!-- ======================================== -->
 <html>
 <head>
@@ -84,10 +84,28 @@
 
     <div class="header-wrap">
         <img src="https://www.auf.edu.ph/home/images/logo2.png" alt="Angeles University Foundation">
-        <h4>Video File Upload</h4>
+        <h4>File Upload</h4>
     </div>
 
     <form method="post" action="uploaded.php" enctype="multipart/form-data">
+
+        <!-- This input only accepts PDF files -->
+        <div class="card">
+            <h3>PDF File</h3>
+            <input type="file" name="pdf_file" accept=".pdf" />
+        </div>
+
+        <!-- This input only accepts MP3 audio files -->
+        <div class="card">
+            <h3>Audio File</h3>
+            <input type="file" name="audio_file" accept=".mp3" />
+        </div>
+
+        <!-- This input only accepts image files -->
+        <div class="card">
+            <h3>Image File</h3>
+            <input type="file" name="image_file" accept="image/*" />
+        </div>
 
         <!-- This input only accepts MP4 video files -->
         <div class="card">
